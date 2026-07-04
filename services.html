@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Index Page</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <style>
+      .navbar {
+        background-color: blueviolet;
+      }
+      .black{
+        background-color: black;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header start -->
+    <header>
+      <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#"
+            >Hewlett-Packard
+            <img src="images/logo.png" alt="Bootstrap" width="30" height="24" />
+          </a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="index.html"
+                  >Home</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="about.html">About Us</a>
+              </li>
+              <li class="nav-item bg-info">
+                <a class="nav-link" href="services.html">Services</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="product.html">Product</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Gallery
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="photo.html">photo</a></li>
+                  <li><a class="dropdown-item" href="video.html">video</a></li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link disabled" aria-disabled="true">Contact Us</a>
+              </li>
+            </ul>
+            <form class="d-flex" role="search">
+              <input
+                class="form-control me-2"
+                type="search"
+                placeholder="Search"
+                aria-label="Search"
+              />
+              <button class="btn btn-outline-success" type="submit">
+                Search
+              </button>
+            </form>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <!-- Header end -->
+    <main>
+      <!-- Table section Start -->
+      <section Class="mt-5">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6">
+              <h2>User Details</h2>
+              <div class="table-responsive">
+                <table
+                  class="table table-dark table striped table-hover table-bordered border-info"
+                >
+                  <thead>
+                    <tr>
+                      <th>Id</th>
+                      <th>Name</th>
+                      <th>Roll No</th>
+                      <th>Email</th>
+                      <th>Phone No</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row">1</th>
+                      <td>Sonali</td>
+                      <td>10</td>
+                      <td>Sonali@gmail.com</td>
+                      <td>12345678</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">2</th>
+                      <td>Dipali</td>
+                      <td>12</td>
+                      <td>Dipali@gmail.com</td>
+                      <td>5678923894</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">3</th>
+                      <td>Rupali</td>
+                      <td>13</td>
+                      <td>Rupali@gmail.com</td>
+                      <td>3467892567</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">4</th>
+                      <td>Shreya</td>
+                      <td>14</td>
+                      <td>Shraya@gmail.com</td>
+                      <td>6789345678</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <h2 class="mb-5">Top Services</h2>
+              <div
+                class="progress mb-3"
+                role="progressbar"
+                aria-label="Default striped example"
+                aria-valuenow="10"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              >
+                <div
+                  class="progress-bar progress-bar-striped progress-bar-animated"
+                  style="width: 100%"
+                >
+                  HTML -100%
+                </div>
+              </div>
+              <div
+                class="progress mb-3"
+                role="progressbar"
+                aria-label="Success striped example"
+                aria-valuenow="25"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              >
+                <div
+                  class="progress-bar progress-bar-striped bg-success progress-bar-animated"
+                  style="width: 55%"
+                >
+                  CSS -55%
+                </div>
+              </div>
+              <div
+                class="progress mb-3"
+                role="progressbar"
+                aria-label="Info striped example"
+                aria-valuenow="50"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              >
+                <div
+                  class="progress-bar progress-bar-striped bg-info progress-bar-animated"
+                  style="width: 80%"
+                >
+                  JavaScript -80%
+                </div>
+              </div>
+              <div
+                class="progress mb-3"
+                role="progressbar"
+                aria-label="Warning striped example"
+                aria-valuenow="75"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              >
+                <div
+                  class="progress-bar progress-bar-striped bg-warning progress-bar-animated"
+                  style="width: 30%"
+                >
+                  Python -30%
+                </div>
+              </div>
+              <div
+                class="progress mb-3"
+                role="progressbar"
+                aria-label="Danger striped example"
+                aria-valuenow="100"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              >
+                <div
+                  class="progress-bar progress-bar-striped bg-danger progress-bar-animated"
+                  style="width: 60%"
+                >
+                  Bootstrap
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Table section End -->
+       <!-- Accordion Section Satrt -->
+      <section>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="accordion" id="accordionExample">
+                <div class="accordion-item">
+                  <h2 class="accordion-header">
+                    <button
+                      class="accordion-button"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#collapseOne"
+                      aria-expanded="true"
+                      aria-controls="collapseOne"
+                    >
+                      Accordion Item #1
+                    </button>
+                  </h2>
+                  <div
+                    id="collapseOne"
+                    class="accordion-collapse collapse show"
+                    data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                      <strong>This is the first item’s accordion body.</strong>
+                      It is shown by default, until the collapse plugin adds the
+                      appropriate classes that we use to style each element.
+                      These classes control the overall appearance, as well as
+                      the showing and hiding via CSS transitions. You can modify
+                      any of this with custom CSS or overriding our default
+                      variables. It’s also worth noting that just about any HTML
+                      can go within the <code>.accordion-body</code>, though the
+                      transition does limit overflow.
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header">
+                    <button
+                      class="accordion-button collapsed"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#collapseTwo"
+                      aria-expanded="false"
+                      aria-controls="collapseTwo"
+                    >
+                      Accordion Item #2
+                    </button>
+                  </h2>
+                  <div
+                    id="collapseTwo"
+                    class="accordion-collapse collapse"
+                    data-bs-parent="#accordionExample"
+                  >
+                    <div class="accordion-body">
+                      <strong>This is the second item’s accordion body.</strong>
+                      It is hidden by default, until the collapse plugin adds
+                      the appropriate classes that we use to style each element.
+                      These classes control the overall appearance, as well as
+                      the showing and hiding via CSS transitions. You can modify
+                      any of this with custom CSS or overriding our default
+                      variables. It’s also worth noting that just about any HTML
+                      can go within the <code>.accordion-body</code>, though the
+                      transition does limit overflow.
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header">
+                    <button
+                      class="accordion-button collapsed"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#collapseThree"
+                      aria-expanded="false"
+                      aria-controls="collapseThree"
+                    >
+                      Accordion Item #3
+                    </button>
+                  </h2>
+                  <div
+                    id="collapseThree"
+                    class="accordion-collapse collapse"
+                    data-bs-parent="#accordionExample"
+                  >
+                    <div class="accordion-body">
+                      <strong>This is the third item’s accordion body.</strong>
+                      It is hidden by default, until the collapse plugin adds
+                      the appropriate classes that we use to style each element.
+                      These classes control the overall appearance, as well as
+                      the showing and hiding via CSS transitions. You can modify
+                      any of this with custom CSS or overriding our default
+                      variables. It’s also worth noting that just about any HTML
+                      can go within the <code>.accordion-body</code>, though the
+                      transition does limit overflow.
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsefour" aria-expanded="false" aria-controls="collapsefour">
+        Accordion Item #4
+      </button>
+    </h2>
+    <div id="collapsefour" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <strong>This is the fourth item’s accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It’s also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+      </div>
+    </div>
+  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+<!-- Accordion Section End -->
+ <!-- Footer Section Start -->
+             <section class="mt-5 black p-5">
+              <div class="container">
+                <div class="row">
+                  <h4><img src="images/images.png"alt="hp logo" width="50" height="40"> Hewlett-Packard</h4>
+                  <hr>
+              
+                  <div class="col-md-3">
+                    <h6>Contact Us</h6>
+                    <ul>
+                      <li>123 Main Street</li>
+                      <li>City, State 12345</li>
+                      <li>Phone: (123) 456-7890</li>
+                      <li>Email: info@yourstore.com</li>
+                    </ul>
+                  </div>
+                   <div class="col-md-3">
+                    <h6>Shop for Products</h6>
+                    <ul>
+                      <li>Laptops</li>
+                      <li>Desktops</li>
+                      <li>Accessories</li>
+                      <li>Software</li>
+                    </ul>
+                   </div>
+                    <div class="col-md-3">
+                      <h6>Customer Service</h6>
+                      <ul>
+                        <li>Shipping & Returns</li>
+                        <li>Warranty Information</li>
+                        <li>FAQs</li>
+                        <li>Contact Support</li>
+                      </ul>
+                    </div>
+                     <div class="col-md-3">
+                      <h6>HP Store</h6>
+                      <ul>
+                        <li>HP online store</li>
+                        <li>HP Employee store</li>
+                        <li>Corporate Employee Offers</li>
+                        <li>Student Store</li>
+                      </ul>
+                     </div>
+                     <hr>
+                </div>
+              </div>
+             </section>
+
+             <!-- Footer section End -->
+ </main>
+ 
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

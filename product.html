@@ -1,0 +1,635 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Index Page</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <style>
+      .navbar {
+        background-color: blueviolet;
+      }
+      .card:hover {
+        background-color: blueviolet;
+        color: black;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- header start -->
+    <header>
+      <nav class="navbar navbar-expand-lg" data-bs-theme="dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#"
+            >Hewlett-Packard
+            <img src="images/logo.png" alt="Bootstrap" width="30" height="24" />
+          </a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="index.html"
+                  >Home</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="about.html">About Us</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="services.html">Services</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link bg-info" href="product.html">Product</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Gallery
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="photo.html">photo</a></li>
+                  <li><a class="dropdown-item" href="video.html">video</a></li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link disabled" aria-disabled="true">Contact Us</a>
+              </li>
+            </ul>
+            <form class="d-flex" role="search">
+              <input
+                class="form-control me-2"
+                type="search"
+                placeholder="Search"
+                aria-label="Search"
+              />
+              <button class="btn btn-outline-success" type="submit">
+                Search
+              </button>
+            </form>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <!-- Header End -->
+    <main>
+      <!-- Product Section start -->
+      <section class="mt-5 bg-primary-subtle text-Dark">
+        <div class="container p-5">
+          <div class="row">
+            <h1>Our Product</h1>
+            <div class="col-md-3 mb-3">
+              <div class="card">
+                <img
+                  src="images/hp2.avif"
+                  class="card-img-top"
+                  alt="laptop image"
+                />
+                <div class="card-body">
+                  <h5 class="card-title">HP Laptop</h5>
+                  <p class="card-text">
+                    Some quick example text to build on the card title and make
+                    up the bulk of the card’s content.
+                  </p>
+                  <h4>Rs.34,999</h4>
+                  <a href="#" class="btn btn-primary">Add To card</a>
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#Model1"
+                  >
+                    Read More
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="card">
+                <img
+                  src="images/mouse5.jpg"
+                  class="card-img-top"
+                  alt="laptop image"
+                />
+                <div class="card-body">
+                  <h5 class="card-title">HP Laptop</h5>
+                  <p class="card-text">
+                    Some quick example text to build on the card title and make
+                    up the bulk of the card’s content.
+                  </p>
+                  <h4>Rs.9,999</h4>
+                  <a href="#" class="btn btn-primary">Add To card</a>
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#Model2"
+                  >
+                    Read More
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="card">
+                <img
+                  src="images/key1.webp"
+                  class="card-img-top"
+                  alt="laptop image"
+                />
+                <div class="card-body">
+                  <h5 class="card-title">Laptop Keyboard</h5>
+                  <p class="card-text">
+                    Some quick example text to build on the card title and make
+                    up the bulk of the card’s content.
+                  </p>
+                  <h4>Rs.12,999</h4>
+                  <a href="#" class="btn btn-primary">Add To card</a>
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#Model3"
+                  >
+                    Read More
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="card">
+                <img
+                  src="images/sp6.webp"
+                  class="card-img-top height-100%"
+                  alt="laptop image"
+                />
+                <div class="card-body">
+                  <h5 class="card-title">Laptop Speakers</h5>
+                  <p class="card-text">
+                    Some quick example text to build on the card title and make
+                    up the bulk of the card’s content.
+                  </p>
+                  <h4>Rs.79,999</h4>
+                  <a href="#" class="btn btn-primary">Add To card</a>
+                   <button
+                    type="button"
+                    class="btn btn-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#Model4"
+                  >
+                    Read More
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-3">
+              <!-- Model One Start -->
+              <div
+                class="modal fade"
+                id="Model1"
+                tabindex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog modal-xl modal-dialog-scrollable">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="exampleModalLabel">
+                        Modal One
+                      </h1>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+
+                    <div class="modal-body">
+                      <section>
+                        <div class="container">
+                          <div class="row">
+                            <div class="col-md-4">
+                              <img
+                                src="images/hp1.avif"
+                                alt="laptop image"
+                                class="img-fluid"
+                              />
+                            </div>
+                            <div class="col-md-8">
+                              <h4>Hp LAptops</h4>
+                              <p>
+                                HP laptops are designed to deliver powerful
+                                performance, modern style, and reliable quality
+                                for every user. Whether you're a student,
+                                professional, gamer, or creative designer, HP
+                                offers a wide range of laptops to meet your
+                                needs. With the latest processors, stunning
+                                displays, long-lasting battery life, and
+                                advanced security features, HP laptops help you
+                                stay productive, connected, and entertained
+                                wherever you go. Explore our collection and find
+                                the perfect HP laptop that fits your lifestyle
+                                and budget.
+                              </p>
+                              <p>
+                                HP laptops are designed to deliver powerful
+                                performance, modern style, and reliable quality
+                                for every user. Whether you're a student,
+                                professional, gamer, or creative designer, HP
+                                offers a wide range of laptops to meet your
+                                needs. With the latest processors, stunning
+                                displays, long-lasting battery life, and
+                                advanced security features, HP laptops help you
+                                stay productive, connected, and entertained
+                                wherever you go. Explore our collection and find
+                                the perfect HP laptop that fits your lifestyle
+                                and budget.
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </section>
+                      <hr />
+                      <section>
+                        <div class="container">
+                          <div class="row">
+                            <div class="col-md-3">
+                              <img
+                                src="images/hp2.avif"
+                                alt="laptop image"
+                                class="img-f'luid"
+                              />'
+                            </div>
+                            <div class="col-md-3">
+                              <img
+                                src="images/hp3.avif"
+                                alt="laptop image"
+                                class="img-fluid"
+                              />
+                            </div>
+                            <div class="col-md-3">
+                              <img
+                                src="images/hp4.avif"
+                                alt="laptop image"
+                                class="img-fluid"
+                              />
+                            </div>
+                            <div class="col-md-3">
+                              <img
+                                src="images/hp4.avif"
+                                alt="laptop image"
+                                class="img-fluid"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                    <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-danger"
+                        data-bs-dismiss="modal"
+                      >
+                        Close
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Model One End -->
+            </div>
+            <div class="col-md-3">
+              <!-- Model Two Start -->
+              <div
+                class="modal fade"
+                id="Model2"
+                tabindex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog modal-xl modal-dialog-scrollable">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="exampleModalLabel">
+                        Modal Two
+                      </h1>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+
+                    <div class="modal-body">
+                      <section>
+                        <div class="container">
+                          <div class="row">
+                            <div class="col-md-4">
+                              <img
+                                src="images/mouse5.jpg"
+                                alt="laptop image"
+                                class="img-fluid"
+                              />
+                            </div>
+                            <div class="col-md-8">
+                              <h4>Mouse Images</h4>
+                              <p>
+                               A mouse is a pointing input device used to control the cursor on a computer screen. It helps users interact with files, folders, applications, and other on-screen objects by moving the pointer, clicking, dragging, and scrolling.
+                              </p>
+                              <p>
+                                A standard mouse usually has a left button, a right button, a scroll wheel, and an optical sensor. The left button is used to select and open items, the right button displays shortcut menus, and the scroll wheel allows users to move up and down through documents and web pages.
+                              </p>
+                              <p>There are different types of mice, including wired, wireless, optical, laser, and gaming mice. A mouse makes it easier to navigate a computer, perform tasks quickly, and improve overall productivity.
+
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </section>
+                      <hr />
+                      <section>
+                        <div class="container">
+                          <div class="row">
+                            <div class="col-md-3">
+                              <img
+                                src="images/mouse1.jpg"
+                                alt="laptop image"
+                                class="img-fluid"
+                              />'
+                            </div>
+                            <div class="col-md-3">
+                              <img
+                                src="images/mouse2.jpg"
+                                alt="laptop image"
+                                class="img-fluid"
+                              />
+                            </div>
+                            <div class="col-md-3">
+                              <img
+                                src="images/mouse3.jpg"
+                                alt="laptop image"
+                                class="img-fluid"
+                              />
+                            </div>
+                            <div class="col-md-3">
+                              <img
+                                src="images/mouse4.jpg"
+                                alt="laptop image"
+                                class="img-fluid"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                    <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-danger"
+                        data-bs-dismiss="modal"
+                      >
+                        Close
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Model Two End -->
+            </div>
+            <div class="col-md-3">
+              <!-- model three start -->
+              <div
+                class="modal fade"
+                id="Model3"
+                tabindex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog modal-xl modal-dialog-scrollable">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="exampleModalLabel">
+                        Modal three
+                      </h1>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+
+                    <div class="modal-body">
+                      <section>
+                        <div class="container">
+                          <div class="row">
+                            <div class="col-md-4">
+                              <img
+                                src="images/key1.webp"
+                                alt="keyboard image"
+                                class="img-fluid"
+                              />
+                            </div>
+                            <div class="col-md-8">
+                              <h4>Keyboard Images</h4>
+                              <p>
+                                A keyboard is an input device used to enter text, numbers, symbols, and commands into a computer. It is one of the most important hardware devices and is commonly used for typing documents, browsing the internet, programming, and operating software.
+                              </p>
+                              <p>
+                                Keyboards are available in different types, including wired, wireless, mechanical, membrane, ergonomic, and gaming keyboards. They improve productivity by allowing fast and accurate data entry and by supporting useful keyboard shortcuts
+                              </p>
+                              <p>In simple words, a keyboard is an essential input device that helps users communicate with and control a computer efficiently.</p>
+                            </div>
+                          </div>
+                        </div>
+                      </section>
+                      <hr />
+                      <section>
+                        <div class="container">
+                          <div class="row">
+                            <div class="col-md-3">
+                              <img
+                                src="images/key2.jpg"
+                                alt="keyboard image"
+                                class="img-fluid"
+                              />
+                            </div>
+                            <div class="col-md-3">
+                              <img
+                                src="images/key3.webp"
+                                alt="keyboard image"
+                                class="img-fluid"
+                              />
+                            </div>
+                            <div class="col-md-3">
+                              <img
+                                src="images/key4.jpg"
+                                alt="keyboard image"
+                                class="img-fluid"
+                              />
+                            </div>
+                            <div class="col-md-3">
+                              <img
+                                src="images/key5.webp"
+                                alt="keyboard image"
+                                class="img-fluid"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                    <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-danger"
+                        data-bs-dismiss="modal"
+                      >
+                        Close
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+               <!-- model three end -->
+            </div>
+            <div class="col-md-3">
+              <!-- model four start -->
+               <div
+                class="modal fade"
+                id="Model4"
+                tabindex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog modal-xl modal-dialog-scrollable">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="exampleModalLabel">
+                        Modal four
+                      </h1>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+
+                    <div class="modal-body">
+                      <section>
+                        <div class="container">
+                          <div class="row">
+                            <div class="col-md-4">
+                              <img
+                                src="images/sp6.webp"
+                                alt="laptop image"
+                                class="img-fluid"
+                              />
+                            </div>
+                            <div class="col-md-8">
+                              <h4>LAptops Speakers</h4>
+                              <p>
+                               Speakers are output devices that convert digital audio signals into sound. They allow users to listen to music, watch movies, attend online meetings, play games, and hear system notifications from a computer or laptop.
+                              </p>
+                              <p>
+                                Speakers are available in different types, including wired, wireless, Bluetooth, portable, and multimedia speakers. They come in various sizes and power levels to suit home, office, and entertainment needs. Many modern speakers also include features such as high-quality stereo sound, deep bass, volume controls, and Bluetooth connectivity.
+                              </p>
+                              <p>
+                                Computer speakers enhance the overall multimedia experience by delivering clear and powerful audio. Whether for work, learning, or entertainment, they provide an enjoyable and immersive listening experience.
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </section>
+                      <hr />
+                      <section>
+                        <div class="container">
+                          <div class="row">
+                            <div class="col-md-3">
+                              <img
+                                src="images/sp2.webp"
+                                alt="laptop image"
+                                class="img-fluid"
+                              />'
+                            </div>
+                            <div class="col-md-3">
+                              <img
+                                src="images/sp3.webp"
+                                alt="laptop image"
+                                class="img-fluid"
+                              />
+                            </div>
+                            <div class="col-md-3">
+                              <img
+                                src="images/sp4.webp"
+                                alt="laptop image"
+                                class="img-fluid"
+                              />
+                            </div>
+                            <div class="col-md-3">
+                              <img
+                                src="images/sp5.webp"
+                                alt="laptop image"
+                                class="img-fluid"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                    <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-danger"
+                        data-bs-dismiss="modal"
+                      >
+                        Close
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+               <!-- model four end -->
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Product section End -->
+    </main>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

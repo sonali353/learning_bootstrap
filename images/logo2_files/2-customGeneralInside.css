@@ -1,0 +1,35 @@
+/* HK - popup to open video chat */
+.inside_visitorNotify[eventid="180"],
+.inside_visitorNotify[eventid="181"] {
+	visibility: hidden !important;
+	pointer-events: none !important;
+}
+
+.videoAvailable:not(.chatPaneOpen) .inside_visitorNotify[eventid="180"],
+.videoAvailable:not(.chatPaneOpen) .inside_visitorNotify[eventid="181"] {
+	visibility: visible !important;
+	pointer-events: auto !important;
+}
+
+/* #49105 */
+#inside_holder:not([device="1"]) #inside_liveChatTab {
+	right: var(--tab-width, 92px) !important
+}
+
+/* To prevent the chat tab from overlapping with the feedback button when the chat tab position is in the middle for MY and SG websites */
+@media(max-width: 450px) {
+  html[lang*="-sg"] #nebula_div_btn,
+  html[lang*="-my"]  #nebula_div_btn {
+    transform: translateY(100%);
+  }
+}
+
+/* #60244 */
+.karte-widget--right {
+	bottom: auto !important;
+}
+
+/* #87001 */
+#karte-c .karte-widget {
+	z-index: 199999;
+}

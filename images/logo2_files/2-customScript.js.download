@@ -1,0 +1,530 @@
+insideFrontInterface.getWebsiteCountry = function () {
+  let country = '';
+  if (_insideGraph.current.visitorData?.country) {
+    country = _insideGraph.current.visitorData.country
+  } else {
+    let langAttr = document.querySelector('html').getAttribute('lang');
+    let metaCountry = document.querySelector('meta[name="target_country"]');
+    if(langAttr && langAttr.includes('-')) {
+      country = langAttr.split('-')[1]
+    } else if(metaCountry) {
+      country = metaCountry.content
+    } else {
+      try {
+        langAttr = location.href.split(location.hostname)[1].split('/')[1];
+      } catch (error) { }
+    }
+  }
+  return country.toUpperCase();
+}
+
+!function($) {
+  let websiteId, chatDocument, chatWindow;
+  const subsitesWithCustomVA = [1, 2, 3, 4];
+  // India, Australia, Singapore, Malaysia
+  const customVA = subsitesWithCustomVA.indexOf(parseInt(_insideGraph.current.subsiteId)) > -1;
+
+  function loadCustomCssForTheme(filePath, id) {
+    const chatDocument = $(document.getElementById('insideChatFrame').contentWindow.document);
+    chatDocument.find('body').prepend('<link id="' + id + '" rel="stylesheet" type="text/css" media="all" href="' + filePath + '">');
+  }
+
+  function getCustomFilePath(fileName) {
+    return _insideCDN + 'custom/' + websiteId + '-' + fileName + '?v=' + _insideScriptVersion;
+  }
+
+  // wait until Inside is loaded
+  _insideGraph.defer(function() {
+    websiteId = insideFrontInterface.chat.userid.split(':')[1];
+    if (customVA) {
+      _insideGraph.defer(function() {
+        loadCustomCssForTheme(getCustomFilePath('custom-va.css'), 'customPrechatCSS');
+      }, function() {
+        return typeof insideChatPane !== "undefined" && insideChatPane.chatPane;
+      });
+
+      customizePicklist();
+      _insideGraph.bind('picklistRendered', customizePicklist);
+      _insideGraph.bind("openchatv2", customizePicklist);
+      insideFrontInterface.bind("assistants", customizePicklist);
+    } else if (_insideGraph.current.subsiteId === '8' && insideFrontInterface.chatSettings.chatPane.preChatSurveyId) {
+      // Hong Kong
+      _insideGraph.loadJS(_insideCDN + 'custom/' + websiteId + '-hk_custom_prechat_form.js?v=' + _insideScriptVersion);
+    }
+  }, function() {
+    return typeof insideFrontInterface != "undefined" && insideFrontInterface.chat && insideFrontInterface.chat.version;
+  });
+
+  _insideGraph.bind('chatpane_html_head', function() {
+    // fade in animation for custom VA
+    return customVA ? `<style>
+    #insideChatPaneContent { opacity: 0; transition: opacity 200ms linear; }
+    </style>` : '';
+  })
+
+  function customizePicklist() {
+    if (typeof insideChatPane === 'undefined' || typeof insideChatPane.chatPane === 'undefined') {
+      return;
+    }
+
+    const createPicklistBox = function(picklistOptions, title) {
+      const firstOption = picklistOptions[0];
+      if (!firstOption) {
+        return;
+      }
+      const picklistBox = $(`
+      <div class="picklistBox">
+        <div class="top">
+          ${firstOption.find('.icon')[0].outerHTML}
+          <div class="right">
+            <label>${insideFrontInterface.chat.translate(title)}</label>
+            ${firstOption.find('.subText')[0].outerHTML}
+          </div>
+        </div>
+      </div>
+      `);
+      picklistBox.insertBefore(firstOption);
+      picklistBox.append(firstOption);
+      for (let i = 1; i < picklistOptions.length; i++) {
+        picklistBox.append(picklistOptions[i]);
+      }
+    }
+
+    const mainMenu = $(insideChatPane.chatPane.querySelector(".picklist[fid='38']"));
+    if (mainMenu.length) {
+      const videoOption = mainMenu.find('.picklistOption[value="1"]');
+      const scheduleOption = mainMenu.find('.picklistOption[value="2"]');
+      const chatOption = mainMenu.find('.picklistOption[value="3"');
+      const leaveMessageOption = mainMenu.find('.picklistOption[value="4"');
+
+      if (!mainMenu.hasClass('custom-ui')) {
+        mainMenu.addClass('custom-ui').css('opacity', 0).closest('.messageContent').addClass('custom-ui');
+        mainMenu.prepend('<p class="custom-message" data-heading="' + insideFrontInterface.chat.translate('Need help with your purchase?') + '">' + insideChatPane.getCurrentWorkflow().step.questionTextNoExistingData + '</p>');
+
+        createPicklistBox([videoOption, scheduleOption], 'Video Call');
+        createPicklistBox([chatOption, leaveMessageOption], 'Live Chat');
+
+        mainMenu.find('.picklistOptions').append('<a target="_blank" href="' + BASE_URL + 'contact-us' + '" class="contactUsLink">Check All Support Options</a>');
+      }
+
+      //mainMenu.find('.custom-message').html(insideFrontInterface.chat.translate(customMessage));
+
+      // when visitor coming from direct chat link
+      if (videoOption.is(':visible') && insideFrontInterface.chatLinkVisitor && insideFrontInterface.chatLinkVisitor.isAppointment) {
+        videoOption.click();
+        insideFrontInterface.chatLinkVisitor = false;
+      }
+    }
+
+  }
+
+  // wait for chat pane module
+  _insideGraph.defer(function () {
+    chatDocument = insideChatPane.frame.contentDocument;
+    chatWindow = insideChatPane.frame.contentWindow;
+
+    // custom event handler 
+    chatDocument.on('click', '#schedulingFormPostText .insideSubmitButton', function () {
+      chatWindow.insideScheduling.closeInputForm()
+    })
+
+    insideChatPane.checkMicPermission = () => {
+      const successCallback = () => {
+        insideChatPane.removeNotification('micNotAllowed');
+      };
+      const failCallback = () => {
+        // if(location.href.search('mic_test') === -1) {
+        //   return;
+        // }
+        insideChatPane.showNotification(
+          `<p>If you haven't allowed your microphone, look for a browser prompt to allow it.</p> <p>To talk to us you need to unblock your microphone via address bar settings.</p> <p><img src="${_insideCDN}/custom/2-how-to-unblock-mic.png?v2" /></p>`,
+          'micNotAllowed', false, false, false, null, 'Yes, I have allowed my microphone', insideChatPane.checkMicPermission);
+      }
+      failCallback();
+      insideChatPane.videoChat.getUserMedia(successCallback, failCallback, false);
+    }
+
+    checkCurrentWorkflow();
+  }, function () {
+    return typeof insideChatPane !== 'undefined' && insideChatPane.frame && typeof insideChatPane.chatPane != "undefined";
+  });
+
+  function checkCurrentWorkflow(params) {
+    try {
+        if(insideChatPane.getCurrentWorkflow() && insideChatPane.getCurrentWorkflow().runJavascriptFunction) {
+          insideChatPane.getCurrentWorkflow().runJavascriptFunction.forEach(jsFunction=>{
+            if (jsFunction.javascript && (!jsFunction.subsiteIds || jsFunction.subsiteIds.indexOf(parseInt(_insideGraph.current.subsiteId)) > -1)) {
+              new Function(jsFunction.javascript)();
+            }
+          });
+        }
+      } catch (error) {
+        console.error('runJavascriptFunction', error, insideChatPane.getCurrentWorkflow());
+      }
+  }
+
+  _insideGraph.bind('chatended', function (data) {
+    insideChatPane.removeNotification('micNotAllowed');
+  });
+
+  $.inside.bind("connected", checkCurrentWorkflow);
+
+  _insideGraph.defer(function () {
+    function adjustTabWidth() {
+      const tabWidth = $('#inside_liveChatTab').find('img, svg').width();
+      document.getElementById('inside_liveChatTab').style.setProperty('--tab-width', `${tabWidth}px`);
+    }
+    adjustTabWidth();
+    setTimeout(adjustTabWidth, 1000);
+  }, function () {
+    return $('#inside_liveChatTab .inside_chatTabImage').length && $('#inside_liveChatTab').find('img, svg').width();
+  });
+
+  
+}(_insideGraph.jQuery);
+
+/**
+ * Custom post chat survey
+ */
+!function ($) {
+  let country = insideFrontInterface.getWebsiteCountry()
+
+  if (country === 'JP') {
+    return; // disable the custom post chat survey popup
+  }
+
+  // remove current postChatSurvey
+  _insideGraph.defer(function () {
+    insideFrontInterface.chatSettings.postChatSurvey = '';
+  }, function () {
+    return typeof insideFrontInterface.chatSettings && insideFrontInterface.chatSettings.postChatSurvey;
+  });
+
+  const lang = insideFrontInterface.language;
+  let operatorId, operatorName, postChatShowing = false;
+
+  function translate(string) {
+    const label = {
+      "How was your chat experience with our agent today?": {
+        "en": "How was your chat experience with our agent today?",
+        "zh-cn": "您今天和我们客服专员对话体验如何？",
+        "zh-tw": "您今日同我哋客服專員嘅對話體驗如何？",
+        "id": "Bagaimana pengalaman Anda saat berchat dengan agen kami?",
+        "ja": "エージェントとのチャット体験はいかがでしたでしょうか？",
+        "ko": "오늘 상담원과의 상담 전반적인 만족도는 어떠셨습니까?",
+        "th": "ประสบการณ์แชทกับเจ้าหน้าที่ของเราในวันนี้เป็นอย่างไรบ้าง"
+      },
+      "LEAVE YOUR FEEDBACK HERE": {
+        "en": "LEAVE YOUR FEEDBACK HERE",
+        "zh-cn": "请在此留下您的反馈意见",
+        "zh-tw": "請在此留下您的意見。",
+        "id": "Berikut adalah jawaban untuk surveinya.",
+        "ja": "アンケートの回答はこちら",
+        "ko": "고객님의 의견은 서비스 품질 향상을 위한 소중한 자료로 활용됩니다.",
+        "th": "ฝากความคิดเห็นของคุณไว้ที่นี่"
+      },
+      "Please take a few minutes to complete our short survey.": {
+        "en": "Please take a few minutes to complete our short survey.",
+        "zh-cn": "请您花几分钟完成我们的简短调查问卷。",
+        "zh-tw": "麻煩你用幾分鐘時間完成我哋嘅問卷調查。",
+        "id": "Mohon kesediaannya untuk mengisi survei singkat ini (hanya memerlukan beberapa menit).",
+        "ja": "簡単なアンケート（所要時間：数分）へのご協力をお願いいたします。",
+        "ko": "잠시 시간을 내어 아래의 간단한 설문조사에 참여해 주시면 감사하겠습니다.",
+        "th": "กรุณาสละเวลาสักครู่เพื่อทำแบบสอบถามสั้นๆของเรา"
+      },
+      "Your responses will be kept confidential and used to improve our service.": {
+        "en": "Your responses will be kept confidential and used to improve our service.",
+        "zh-cn": "您的回复将被保密，并用于改进我们的服务。",
+        "zh-tw": "您的回覆將會被保密，並用於改善我們的服務。",
+        "id": "Jawaban yang Anda berikan akan dikelola dengan sangat hati-hati dan digunakan untuk meningkatkan kualitas layanan kami.",
+        "ja": "お客様からいただいた回答は厳重に管理し、より良いサービス提供のために活用させていただきます。",
+        "ko": "고객님께서 제공하신 모든 정보는 비밀로 안전하게 관리되며, 서비스 개선을 위한 자료로만 활용됩니다.",
+        "th": "คำตอบของคุณจะถูกเก็บเป็นความลับ และ นำไปใช้เพื่อปรับปรุงการให้บริการของเรา"
+      }
+    };
+    const languageByLocale = {
+      "zh-hans": "zh-cn",
+      "zh-sg": "zh-cn",
+      "zh-hant": "zh-tw",
+      "zh-hk": "zh-tw",
+      "id-id": "id",
+      "in": "id",
+      "ja-jp": "ja",
+      "ko-kr": "ko",
+      "th-th": "th"
+    };
+    const locale = (lang || "").toLowerCase();
+    let normalizedLang = languageByLocale[locale] || locale;
+    if (label[string] && !label[string][normalizedLang] && normalizedLang.includes("-")) {
+      normalizedLang = normalizedLang.split("-")[0];
+    }
+    return (label[string] && (label[string][normalizedLang] || label[string].en)) || string;
+  }
+
+  const capturedVisitorMessagesByChatId = {};
+  function captureVisitorMessage(chatId, text) {
+    if (!chatId) {
+      return;
+    }
+    if (!text) {
+      return;
+    }
+    if (!capturedVisitorMessagesByChatId[chatId]) {
+      capturedVisitorMessagesByChatId[chatId] = [];
+    }
+    if (capturedVisitorMessagesByChatId[chatId].indexOf(text) === -1) {
+      capturedVisitorMessagesByChatId[chatId].push(text);
+    }
+  }
+
+  insideFrontInterface.getVisitorMessages = function (chatId) {
+    return capturedVisitorMessagesByChatId[chatId || insideFrontInterface.currentChatId] || [];
+  }
+
+  function getChatCategory() {
+    const sourceTypeMapping = {
+      'CONSUMER CHAT': [
+        "Home/Personal use",
+        "家庭/个人使用",
+        "Penggunaan di rumah atau pribadi",
+        "가정용/개인용",
+        "สำหรับบ้าน/ใช้ส่วนบุคคน",
+        "家用及個人用戶",
+        "Home/Personal use (家用及個人用戶)",
+        "individual customer",
+        "個人のお客様",
+        "Home Customer",
+        "家庭客户",
+        "家用",
+        "Pelanggan Rumah",
+        "개인고객",
+        "ลูกค้าทั่วไป",
+        "Home",
+        "家庭",
+        "Rumah",
+        "가정용",
+        "หน้าหลัก",
+        "Personal",
+        "个人",
+        "個人",
+        "Pribadi",
+        "개인",
+        "สินค้าสำหรับบุคคลทั่วไป",
+        "Consumer",
+        "消費者",
+        "Konsumen",
+        "ผลิตภัณฑ์ทั่วไป"
+      ],
+      'BUSINESS CHAT': [
+        "Business/Commercial use",
+        "企业/商业使用",
+        "Penggunaan di bisnis atau komersial",
+        "기업용",
+        "สำหรับธุรกิจ/ใช้งานในองค์กรณ์",
+        "中小企及商業用戶",
+        "Business/Commercial use (中小企及商業用戶)",
+        "Corporate and sole proprietor customers",
+        "法人・個人事業主のお客様",
+        "Business Customer",
+        "商业客户",
+        "商用",
+        "Pelanggan Bisnis",
+        "기업고객",
+        "ลูกค้าธุรกิจ",
+        "Business",
+        "商业",
+        "Bisnis",
+        "สินค้าสำหรับภาคธุรกิจ",
+        "Commercial",
+        "Komersial",
+        "ผลิตภัณฑ์เชิงพาณิชย์"
+      ],
+    }
+
+    const queueTypeMapping = {
+      'SALES': [
+        "Sales Inquiry", 
+        "Product Help, Repair &amp; Warranty",
+        "Assistance in repairing my product",
+        "Bantuan untuk jasa servis produk ",
+        "제품수리에 대한 도움",
+        "ติดตามช่วยเหลือการส่งซ่อมสินค้าของฉัน",
+        "Help me find the right product",
+        "帮助我挑选适用的产品",
+        "Bantu saya menemukan produk yang tepat",
+        "나에게 맞는 제품 추천을 원합니다.",
+        "ช่วยฉันหาสินค้าที่ถูกต้อง",
+        "協助尋找最合適的產品",
+        "Live Product Demo",
+        "Help me find the right product (協助尋找最合適的產品)",
+        "Find me the right product",
+        "Repairing my product"
+      ],
+      'POST SALES': [
+        "Order Support",
+        "Questions regarding my order",
+        "订单相关问题",
+        "Pertanyaan mengenai pesanan saya",
+        "구매 후 문의가 있습니다.",
+        "คำถามเกี่ยวกับการติดตามสถานะการสั่งซื้อ",
+        "查詢訂單狀況",
+        "Questions regarding my order (查詢訂單狀況)",
+        "Questions about my order"
+      ],
+    }
+
+    const chatId = _insideGraph.getCookie('insideCurrentChatId');
+    const messages = capturedVisitorMessagesByChatId[chatId] || [];
+
+    function findMappedValue(mapping, text) {
+      if (!text) {
+        return '';
+      }
+      const normalized = String(text).trim();
+      const textDecoded = normalized.replace(/&amp;/g, '&');
+      for (const key of Object.keys(mapping)) {
+        const phrases = mapping[key];
+        for (let i = 0; i < phrases.length; i++) {
+          const phrase = phrases[i];
+          const phraseDecoded = phrase.replace(/&amp;/g, '&');
+          if (
+            normalized === phrase ||
+            normalized === phraseDecoded ||
+            textDecoded === phraseDecoded ||
+            normalized.indexOf(phrase) !== -1 ||
+            normalized.indexOf(phraseDecoded) !== -1 ||
+            textDecoded.indexOf(phraseDecoded) !== -1
+          ) {
+            return key;
+          }
+        }
+      }
+      return '';
+    }
+
+    let sourceType = '';
+    let queueId = '';
+    for (let m = 0; m < messages.length; m++) {
+      if (!sourceType) {
+        sourceType = findMappedValue(sourceTypeMapping, messages[m]);
+      }
+      if (!queueId) {
+        queueId = findMappedValue(queueTypeMapping, messages[m]);
+      }
+      if (sourceType && queueId) {
+        break;
+      }
+    }
+
+    return { queueId, sourceType };
+  }
+
+  function showPostChat(currentChatId) {
+    const chatCategory = getChatCategory();
+    let agentId = operatorId;
+    let agentName = operatorName;
+    let surveyLang = lang.toUpperCase();
+    if(['ES', 'BE', 'CH'].includes(country)) {
+      surveyLang = country + '-' + surveyLang;
+    }
+    let surveyLink = `https://feedback2.hp.com/jfe/form/SV_09emPpD6VLzbQP4?SourceType=${chatCategory.sourceType}&countryCode=${country}&Q_Language=${surveyLang}&AgentID=${agentId}&ChatSessionID=${currentChatId}&AgentName=${agentName}&QueueID=${chatCategory.queueId}`;
+
+    let previousLink = _insideGraph.getCookie('insideSurveyLink');
+    if (previousLink == surveyLink) {
+      return;
+    }
+
+    _insideGraph.setCookie('insideSurveyLink', surveyLink);
+
+    let html =
+      `<div aria-live="polite" tabindex="2" class="surveyQuestionContainer customSurvey" qid="0">
+      <div class="box">
+        <span tabindex="2" class="icon-close" aria-label="close" role="button"></span>
+        <label class="heading">${translate('How was your chat experience with our agent today?')}</label>
+        
+        <a class="surveyNextButton insideSubmitButton" tabindex="2" href="${surveyLink}" target="_blank">
+          ${translate('LEAVE YOUR FEEDBACK HERE')}
+        </a>
+        <p class="inside_label">${translate('Please take a few minutes to complete our short survey.')} ${translate('Your responses will be kept confidential and used to improve our service.')}</p>
+      </div>
+    </div>`;
+    let inside_holder = $(insideChatPane.frame.contentDocument).find('#inside_holder');
+    inside_holder.find('#inside_prechatForm').remove();
+    inside_holder.append(html);
+    let surveyQuestionContainer = inside_holder.find('.surveyQuestionContainer');
+    setTimeout(function () {
+      surveyQuestionContainer.addClass('opened');
+    }, 10);
+    surveyQuestionContainer.find(".icon-close").click(function (e) {
+      surveyQuestionContainer.removeClass('opened');
+      setTimeout(function () {
+        surveyQuestionContainer.remove();
+      }, 300);
+    });
+    surveyQuestionContainer.find(".surveyNextButton").click(function (e) {
+      surveyQuestionContainer.find(".icon-close").click();
+    });
+  }
+
+  _insideGraph.bind("chatended", function () {
+    operatorId = insideFrontInterface.getLastMessageOperatorId();
+    operatorName = insideFrontInterface.getLastMessageAssistantName();
+    let currentChatId = _insideGraph.getCookie('insideCurrentChatId');
+    let chatIdAvailable = (!currentChatId || currentChatId == 0 || isNaN(currentChatId)) === false;
+    let taskIsActive = typeof insideChatPane !== 'undefined' && insideChatPane.getCurrentWorkflow() && insideChatPane.getCurrentWorkflow().isActive;
+    const excludedSubsites = [ 31 ]; //Saudi Arabia
+    if (operatorName && chatIdAvailable && insideChatPane.activeChat && !taskIsActive && !excludedSubsites.includes(parseInt(_insideGraph.current.subsiteId))) {
+      postChatShowing = true;
+      showPostChat(currentChatId);
+    }
+  });
+
+  $.inside.bind("chat", function (messages) {
+    const lastMessage = messages.message;
+    _insideGraph.setCookie('insideCurrentChatId', lastMessage.chatid);
+    const fromBot = lastMessage.metadata && lastMessage.metadata.fromWorkflowBot;
+    const arr = lastMessage.fromid.split(":");
+    if (arr[0] === 'user') {
+      captureVisitorMessage(lastMessage.chatid, lastMessage.text || lastMessage.message);
+    }
+    if (arr[0] === 'assistant' && !fromBot) {
+      operatorId = arr[2];
+      operatorName = lastMessage.fromname;
+    }
+  });
+
+  _insideGraph.defer(function () {
+    // get current operatorId
+    if ($.inside.front.settingsData.chats && $.inside.front.settingsData.chats.length) {
+      let prevChat = $.inside.front.settingsData.chats;
+      for (let i = 0; i < prevChat.length; i++) {
+        if (prevChat[i].fromid.indexOf("assistant") > -1) {
+          operatorId = prevChat[i].fromid.split(":")[2];
+          operatorName = prevChat[i].fromname;
+        }
+      }
+    }
+
+    // custom post chat survey
+    let chatPaneClose = insideChatPane.close;
+    insideChatPane.close = function (fromUser) {
+      chatPaneClose(fromUser);
+
+      // reopen the chat pane if post chat survey is showing
+      if (postChatShowing) {
+        postChatShowing = false;
+        if (insideChatPane.getChatEndedByCustomer()) insideChatPane.open();
+      }
+    }
+
+    if (insideFrontInterface.chat.data?.chats?.length) {
+      insideFrontInterface.chat.data.chats.filter(c => c.fromid.startsWith('user')).map(c=>c.text).forEach(message => {
+        captureVisitorMessage(insideFrontInterface.currentChatId, message);
+      });
+    }
+  }, function () {
+    return typeof insideChatPane != 'undefined' && insideChatPane.chatPane;
+  });
+
+
+}(_insideGraph.jQuery)
